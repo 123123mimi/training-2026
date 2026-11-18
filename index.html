@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>원격훈련 실무 교육 자료집</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#191f28;
+  --body:#4e5968;
+  --muted:#8b95a1;
+  --line:#e5e8eb;
+  --blue:#2463eb;
+  --blue-soft:#eef4ff;
+  --gray-bg:#f7f8fa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:#fff;color:var(--ink);
+  font-family:"Noto Sans KR","Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:16px;line-height:1.7;letter-spacing:-0.01em;
+  word-break:keep-all;overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+ol,ul{list-style:none}
+
+/* ---------- 왼쪽 날개 ---------- */
+.side{position:fixed;top:0;left:0;bottom:0;width:240px;padding:52px 0 0 44px;z-index:5}
+.brand{font-size:13px;font-weight:700;line-height:1.5}
+.brand span{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+.dots{margin-top:64px;position:relative}
+.dots::before{content:"";position:absolute;left:4px;top:10px;bottom:10px;width:1px;background:var(--line)}
+.dots a{display:flex;align-items:flex-start;gap:16px;padding:10px 0;text-decoration:none;font-size:13px;line-height:1.55;color:var(--muted)}
+.dots a i{flex:none;width:9px;height:9px;margin-top:6px;border-radius:50%;background:#fff;border:1px solid #c5ccd5;position:relative;z-index:1;transition:all .2s}
+.dots a:hover{color:var(--ink)}
+.dots a.on{color:var(--ink);font-weight:500}
+.dots a.on i{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft)}
+
+/* ---------- 본문 공통 ---------- */
+main{margin-left:240px;padding:0 48px 120px}
+.wrap{max-width:1200px;margin:0 auto}
+.topbar{display:flex;justify-content:flex-end;padding-top:44px}
+.print-btn{font:inherit;font-size:13px;color:var(--body);background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer}
+.print-btn:hover{border-color:#c5ccd5;color:var(--ink)}
+
+.sec{padding-top:56px}
+.sec+.sec{margin-top:96px;padding-top:96px;border-top:1px solid var(--line)}
+.part-no{font-size:14px;font-weight:700;color:var(--blue)}
+.part-head h2{font-size:36px;line-height:1.35;font-weight:700;letter-spacing:-0.03em;margin-top:8px}
+.meta{margin-top:14px;font-size:14px;color:var(--muted)}
+.meta b{font-weight:500;color:var(--body);margin-right:6px}
+.meta span+span{margin-left:20px}
+.lead{margin-top:28px;max-width:680px;font-size:17px;line-height:1.85;color:var(--body)}
+.notice{margin-top:24px;max-width:680px;padding:16px 20px;border-radius:12px;background:var(--gray-bg);font-size:14px;line-height:1.75;color:var(--body)}
+.notice b,.inner{color:var(--blue);font-weight:500}
+.notice b{margin-right:8px}
+
+.block{margin-top:96px}
+.block-title{font-size:24px;line-height:1.4;font-weight:700;letter-spacing:-0.03em;margin-bottom:40px}
+
+/* ---------- 화면 + 내용 ---------- */
+.flow{display:grid;grid-template-columns:340px minmax(0,1fr);column-gap:40px;align-items:start}
+.steps{border-right:1px solid var(--line)}
+.step{position:relative;padding:28px 32px 28px 0;border-bottom:1px solid var(--line)}
+.step:first-child{padding-top:0}
+.step:last-child{border-bottom:0;padding-bottom:0}
+.step::after{content:"";position:absolute;right:-1px;top:0;bottom:0;width:2px;background:transparent;transition:background .25s}
+.step.on::after{background:var(--ink)}
+.num{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.02em}
+.step h4{font-size:19px;line-height:1.45;font-weight:700;letter-spacing:-0.02em;margin-top:4px}
+.inner{display:inline-block;margin-left:8px;font-size:12px;vertical-align:2px}
+.step p{margin-top:10px;font-size:15px;line-height:1.8;color:var(--body);text-wrap:pretty}
+.step .note{margin-top:10px;font-size:14px;line-height:1.7;color:var(--muted)}
+.step .note b{color:var(--blue);font-weight:500;margin-right:6px}
+.js .step{opacity:.42;transition:opacity .25s;cursor:pointer}
+.js .step.on{opacity:1}
+
+.stage{position:sticky;top:48px;background:var(--blue-soft);border-radius:20px;padding:16px}
+.stage .frame{position:relative;aspect-ratio:15/8;border-radius:10px;overflow:hidden;background:#fff}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .3s;pointer-events:none}
+.stage img.on{pointer-events:auto;cursor:zoom-in}
+.inline-shot img{cursor:zoom-in}
+.zoom-hint{display:block;margin-top:10px;font-size:12px;color:var(--muted);text-align:right}
+.lightbox{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(25,31,40,.82);cursor:zoom-out}
+.lightbox img{max-width:min(1400px,100%);max-height:100%;border-radius:8px;background:#fff;object-fit:contain}
+.stage img.on{opacity:1}
+.inline-shot{display:none}
+
+/* ---------- 정리 · 표 · 목록 ---------- */
+.points{border-top:1px solid var(--ink)}
+.points li{display:grid;grid-template-columns:56px minmax(0,1fr);padding:20px 0;border-bottom:1px solid var(--line)}
+.points span{font-size:14px;font-weight:700;color:var(--blue);line-height:1.8}
+.points p{font-size:16px;line-height:1.8;color:var(--ink)}
+.closing{margin-top:28px;font-size:15px;line-height:1.85;color:var(--body);max-width:680px}
+
+.info{border-top:1px solid var(--ink)}
+.info div{display:grid;grid-template-columns:120px minmax(0,1fr);padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}
+.info dt{color:var(--muted)}
+.info dd{color:var(--ink)}
+
+.timeline{border-top:1px solid var(--ink)}
+.timeline li{display:grid;grid-template-columns:120px minmax(0,1fr);padding:18px 0;border-bottom:1px solid var(--line)}
+.timeline time{font-size:15px;font-weight:500;color:var(--blue)}
+.timeline b{display:block;font-size:16px;font-weight:500}
+.timeline span{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+.mini{font-size:16px;font-weight:700;padding-bottom:14px;border-bottom:1px solid var(--ink)}
+.plain li{position:relative;padding:14px 0 14px 14px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.75;color:var(--body)}
+.plain li::before{content:"";position:absolute;left:0;top:calc(14px + .85em);width:4px;height:4px;border-radius:50%;background:#aeb7c2}
+
+.qna{border-top:1px solid var(--ink)}
+.qa{display:grid;grid-template-columns:340px minmax(0,1fr);column-gap:40px;padding:22px 0;border-bottom:1px solid var(--line)}
+.q{font-size:16px;font-weight:500;line-height:1.7}
+.a{font-size:15px;line-height:1.8;color:var(--body)}
+
+.terms{border-top:1px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+.terms div{display:grid;grid-template-columns:120px minmax(0,1fr);column-gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.terms dt{font-size:15px;font-weight:500}
+.terms dd{font-size:14.5px;line-height:1.7;color:var(--body)}
+
+.foot{margin-top:120px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+/* ---------- 태블릿 ---------- */
+@media screen and (max-width:1100px){
+  main{padding:0 32px 120px}
+  .flow{grid-template-columns:290px minmax(0,1fr);column-gap:32px}
+  .qa{grid-template-columns:290px minmax(0,1fr);column-gap:32px}
+  .terms{grid-template-columns:1fr}
+}
+/* ---------- 모바일 ---------- */
+@media screen and (max-width:900px){
+  .side{position:sticky;top:0;bottom:auto;width:auto;z-index:10;padding:14px 16px 0;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
+  .brand{display:none}
+  .dots{display:flex;gap:22px;margin:0;overflow-x:auto;scrollbar-width:none}
+  .dots::-webkit-scrollbar{display:none}
+  .dots::before,.dots a i,.dots br{display:none}
+  .dots a{white-space:nowrap;padding:4px 0 12px;border-bottom:2px solid transparent}
+  .dots a.on{border-bottom-color:var(--blue)}
+  main{margin-left:0;padding:0 16px 80px}
+  .topbar{padding-top:20px}
+  .sec{padding-top:24px}
+  .sec+.sec{margin-top:72px;padding-top:56px}
+  .part-head h2{font-size:26px}
+  .meta span{display:block}
+  .meta span+span{margin-left:0}
+  .lead{font-size:16px}
+  .block{margin-top:64px}
+  .block-title{font-size:20px;margin-bottom:24px}
+  .flow{display:block}
+  .steps{border-right:0}
+  .step{padding:28px 0}
+  .step:first-child{padding-top:0}
+  .step::after{display:none}
+  .js .step{opacity:1}
+  .stage{display:none}
+  .inline-shot{display:block;margin-top:18px;background:var(--blue-soft);border-radius:14px;padding:12px}
+  .inline-shot img{width:100%;border-radius:6px;background:#fff}
+  .two{grid-template-columns:1fr;row-gap:40px}
+  .qa{grid-template-columns:1fr;row-gap:6px}
+  .info div,.timeline li{grid-template-columns:88px minmax(0,1fr)}
+  .terms div{grid-template-columns:96px minmax(0,1fr)}
+  .points li{grid-template-columns:40px minmax(0,1fr)}
+}
+
+/* ---------- 인쇄 (A4) ---------- */
+@page{size:A4;margin:16mm 15mm 18mm}
+@media print{
+  body{font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .side,.topbar,.stage,.zoom-hint,.lightbox{display:none !important}
+  main{margin:0;padding:0}
+  .wrap{max-width:none}
+  .sec,.sec+.sec{margin:0;padding:0;border:0;break-before:page}
+  .sec:first-of-type{break-before:auto}
+  .part-no{font-size:9pt}
+  .part-head h2{font-size:20pt;margin-top:1mm}
+  .meta{font-size:8.5pt;margin-top:2mm}
+  .lead{font-size:10pt;margin-top:4mm;max-width:none}
+  .notice{font-size:8.8pt;margin-top:4mm;padding:3mm 4mm;max-width:none}
+  .block{margin-top:10mm}
+  .block-title{font-size:13pt;margin-bottom:4mm;break-after:avoid}
+  .flow{display:block}
+  .steps{border-right:0}
+  .js .step,.step{opacity:1}
+  .step{display:grid;grid-template-columns:minmax(0,1fr) 92mm;grid-template-rows:auto auto auto auto 1fr;column-gap:7mm;align-items:start;padding:4mm 0;break-inside:avoid}
+  .step:first-child{padding-top:0}
+  .step::after{display:none}
+  .step > :not(.inline-shot){grid-column:1}
+  .num{font-size:8.5pt}
+  .step h4{font-size:11.5pt}
+  .step p{font-size:9pt;margin-top:1.5mm}
+  .step .note{font-size:8.5pt;margin-top:1.5mm}
+  .inline-shot{display:block;grid-column:2;grid-row:1 / -1;background:var(--blue-soft);border-radius:2.5mm;padding:2.5mm}
+  .inline-shot img{width:100%;border-radius:1mm;background:#fff}
+  .points li,.info div,.timeline li,.plain li,.qa,.terms div{break-inside:avoid;padding-top:2.5mm;padding-bottom:2.5mm}
+  .points p,.timeline b{font-size:9.5pt}
+  .info div,.plain li,.a,.closing,.terms dd{font-size:9pt}
+  .q,.terms dt{font-size:9.5pt}
+  .qa{grid-template-columns:70mm minmax(0,1fr);column-gap:7mm}
+  .two{column-gap:8mm}
+  .terms{column-gap:8mm}
+  .terms div{grid-template-columns:24mm minmax(0,1fr)}
+  .foot{margin-top:10mm;font-size:8pt}
+  #overview .block{margin-top:7mm}
+  #overview .info div,#overview .timeline li,#overview .plain li{padding-top:1.8mm;padding-bottom:1.8mm}
+  .block.keep{break-inside:avoid}
+}
+.flow.p2 .stage img{object-fit:cover}
+
+</style>
+</head>
+<body>
+<nav class="side" aria-label="목차">
+  <div class="brand">2026 원격훈련 실무 교육<span>과정 정리 자료집</span></div>
+  <ul class="dots">
+    <li><a href="#overview" class="on"><i></i>교육 개요</a></li>
+    <li><a href="#part1"><i></i>바이브코딩으로 하는 <br>업무 자동화</a></li>
+    <li><a href="#part2"><i></i>AI로 만드는 교육영상</a></li>
+  </ul>
+</nav>
+<main>
+<div class="wrap">
+<div class="topbar"><button class="print-btn" type="button" onclick="window.print()">인쇄 / PDF 저장</button></div>
+
+<section id="overview" class="sec">
+  <header class="part-head">
+    <div class="part-no">교육 개요</div>
+    <h2>2026 원격훈련 종사자 실무 교육</h2>
+  </header>
+
+
+
+  <div class="block">
+    <h3 class="block-title">협회 안내 사항</h3>
+    <div class="two">
+      <div>
+        <h4 class="mini">인사 말씀</h4>
+        <ul class="plain">
+          <li>과정 심사·인증평가 기준과 AI 기초·융합 과정 심사는 올해와 큰 변화가 없을 전망입니다.</li>
+          <li>내년 예산은 올해(약 1,100억 원)와 비슷하나 일반직무는 약 15% 줄고 다른 사업으로 옮겨질 예정입니다.</li>
+          <li>11월 26일 한국산업인력공단 사업 설명회, 12월 21일 심사평가원 설명회가 예정되어 있습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mini">AI 기초 과정 차시 기준</h4>
+        <ul class="plain">
+          <li>AI 기초 과정은 40차시가 아니라 20차시(20시간) 내외로 운영해 달라고 당부했습니다.</li>
+          <li>차시가 과도하면 예산이 부족해져 원격기관 전체가 부정적으로 비칠 수 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="part1" class="sec">
+  <header class="part-head">
+    <div class="part-no">1부</div>
+    <h2>바이브코딩으로 하는 업무 자동화</h2>
+    <p class="lead">강연자는 본인이 쓰는 Claude로 예시를 들었지만, 각자 사용하는 ChatGPT 등 다른 AI로도 같은 방식으로 활용하면 된다고 말했습니다.</p>
+  </header>
+
+  <div class="block">
+    <h3 class="block-title">강의 핵심 개념</h3>
+    <div class="flow p1">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>바이브코딩이란</h4>
+        <p>코드를 모르는 사람이 AI에게 원하는 기능을 말로 설명해 프로그램을 만드는 방식입니다. AI는 코드는 잘 만들지만 교육원 업무는 모르기 때문에, 만들고 싶은 것을 명확히 전달하는 능력이 핵심입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_02.jpg" alt="바이브코딩이란 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>AX와 DX</h4>
+        <p>AX는 업무 방식, 사람이 하던 일, 교육원 규정 같은 운영 체계를 AI가 수행할 수 있는 형태로 바꾸는 것입니다. 데이터가 개인 PC에 흩어져 있다면 업무를 목록으로 만들고 데이터화부터 해야 합니다.</p>
+        <p class="note"><b>핵심</b>데이터화할 수 있는 만큼이 AX가 됩니다.</p>
+        <figure class="inline-shot"><img src="img/p1_03.jpg" alt="AX와 DX 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>교육원에 AX가 필요한 이유</h4>
+        <p>교육원은 신고, 명단 취합, 일괄 발송처럼 반복 업무가 많습니다. 다만 모든 일을 AI가 직접 처리하면 토큰 비용이 커지므로, AI로 자동화 프로그램을 만들고 필요한 곳에만 AI를 붙이는 방식이 맞습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_04.jpg" alt="교육원에 AX가 필요한 이유 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>오늘의 실습 주제</h4>
+        <p>첫째는 영업자·사업주마다 제각각인 명단을 LMS 업로드 양식으로 바꾸는 수강생 명단 변환기, 둘째는 고용24 가입 없이 공공데이터로 기업의 예상 환급 규모를 추정하는 신규 사업주 발굴기입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_07.jpg" alt="오늘의 실습 주제 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p1_02.jpg" alt="" class="on"><img src="img/p1_03.jpg" alt=""><img src="img/p1_04.jpg" alt=""><img src="img/p1_07.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+  <div class="block">
+    <h3 class="block-title">교육원 업무에 적용하는 다섯 단계</h3>
+    <div class="flow p1">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>도구 설치와 확인</h4>
+        <p>Claude Code를 예로 들었지만 Codex나 Gemini 같은 다른 도구를 써도 됩니다. 코드가 낯설다면 터미널보다 데스크톱 앱을 권장합니다. 필요한 프로그램은 Python, Node.js, Git입니다.</p>
+        <p class="note"><b>참고</b>명령어는 외우지 않아도 됩니다. “파이썬 설치해줘”라고 요청하면 알아서 설치합니다.</p>
+        <figure class="inline-shot"><img src="img/p1_10.jpg" alt="도구 설치와 확인 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>작업 폴더와 업무 규칙</h4>
+        <p>프로그램이 읽을 엑셀은 정해진 폴더에 넣고, 그 폴더만 열어 작업합니다. 폴더 안의 CLAUDE.md에는 읽기 전용 파일, 저장 방식, 열 순서 같은 업무 규칙을 적습니다.</p>
+        <p class="note"><b>주의</b>프로그램마다 폴더를 따로 만드세요. 상위 폴더의 규칙과 충돌할 수 있습니다.</p>
+        <figure class="inline-shot"><img src="img/p1_15.jpg" alt="작업 폴더와 업무 규칙 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>스킬 등록과 활용</h4>
+        <p>스킬은 잘 정리된 작업 지침 묶음으로, Claude가 작업 전에 참고합니다. 공식 스킬은 모두 설치하고, 외부 스킬은 무료 배포가 허용된 것만 씁니다. 필요한 스킬은 “이런 작업에 맞는 스킬을 찾아 설치해줘”라고 물어보면 됩니다.</p>
+        <p class="note"><b>주의</b>권한을 모두 열어 두면 스킬이 외부에 공개되거나 결제가 진행될 수 있습니다.</p>
+        <figure class="inline-shot"><img src="img/p1_17.jpg" alt="스킬 등록과 활용 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>Plan Mode로 계획 후 제작</h4>
+        <p>바로 만들어 달라고 하기 전에 Claude와 충분히 상담하는 단계입니다. 입력 파일과 열, 출력 형식과 저장 위치, 예외 처리를 함께 정리하고, Claude가 “만들어도 되겠다”고 할 때 제작을 맡깁니다.</p>
+        <p class="note"><b>핵심</b>강의에서 가장 강조한 단계입니다. 토큰 비용과 재작업이 함께 줄어듭니다.</p>
+        <figure class="inline-shot"><img src="img/p1_23.jpg" alt="Plan Mode로 계획 후 제작 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">05</div>
+        <h4>검수와 배포</h4>
+        <p>결과를 보여 주는 HTML 보고 페이지를 요청하면 잘못된 행만 골라 고칠 수 있습니다. Git에 버전이 남아 있어 언제든 되돌릴 수 있고, “빌드해줘”로 실행 파일을 만들어 배포합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_25.jpg" alt="검수와 배포 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p1_10.jpg" alt="" class="on"><img src="img/p1_15.jpg" alt=""><img src="img/p1_17.jpg" alt=""><img src="img/p1_23.jpg" alt=""><img src="img/p1_25.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+  <div class="block">
+    <h3 class="block-title">실습 1. 수강생 명단 자동 변환기</h3>
+    <div class="flow p1">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>준비 파일과 표준 열</h4>
+        <p>머리글이 서로 다른 가상 엑셀 두 개(A기업 10행, B기업 5행)를 LMS 표준 7개 열로 통일합니다. 성명과 이름, 핸드폰과 연락처처럼 이름만 다른 열을 같은 열로 연결하는 것이 핵심입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_28.jpg" alt="준비 파일과 표준 열 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>계획 먼저 확인</h4>
+        <p>Plan Mode에서 “코드를 작성하기 전에 샘플을 읽고 제작 계획부터 보여 주세요”라고 요청합니다. 머리글 읽기, 7개 열 연결, 오류 분리, 새 파일 저장, 15행 테스트 순서로 계획이 나옵니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_29.jpg" alt="계획 먼저 확인 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>제작 요청</h4>
+        <p>CLAUDE.md와 xlsx 스킬을 적용해 표준 7개 열로 바꾸고, 정상 명단과 확인 필요 시트를 나누며, 열 사전은 JSON 파일로 분리하라고 요청합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_30.jpg" alt="제작 요청 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>1차 실행 결과 확인</h4>
+        <p>B기업 5행의 휴대폰번호가 빈칸으로 나옵니다. 열 사전에 ‘연락처’라는 별칭이 없어서 생긴 매핑 누락입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_31.jpg" alt="1차 실행 결과 확인 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">05</div>
+        <h4>열 이름 사전 수정</h4>
+        <p>‘연락처’, ‘모바일’, ‘HP’, ‘휴대전화’를 휴대폰번호의 별칭으로 추가하고, 필수 열을 찾지 못하면 원본 머리글을 화면에 보여 달라고 요청합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_32.jpg" alt="열 이름 사전 수정 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">06</div>
+        <h4>재검수</h4>
+        <p>같은 파일로 다시 실행하면 15행이 정상 13행과 확인 필요 2행으로 나뉩니다. 확인 필요 2행은 날짜(1988-13-45)와 전화번호(010-234-567)의 형식 오류입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_33.jpg" alt="재검수 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">07</div>
+        <h4>빌드와 배포</h4>
+        <p>“빌드해줘”로 명단변환기.exe를 만들고, 열이름사전.json과 함께 동료 PC에서 실행·변환·저장이 되는지 확인합니다.</p>
+        <p class="note"><b>참고</b>교육원 양식이 바뀌면 규칙을 고친 뒤 다시 검수하고 빌드합니다.</p>
+        <figure class="inline-shot"><img src="img/p1_34.jpg" alt="빌드와 배포 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p1_28.jpg" alt="" class="on"><img src="img/p1_29.jpg" alt=""><img src="img/p1_30.jpg" alt=""><img src="img/p1_31.jpg" alt=""><img src="img/p1_32.jpg" alt=""><img src="img/p1_33.jpg" alt=""><img src="img/p1_34.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+  <div class="block">
+    <h3 class="block-title">실습 2. 공공데이터 신규 사업주 발굴기</h3>
+    <div class="flow p1">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>입력 자료</h4>
+        <p>공공데이터포털의 ‘국민연금 가입 사업장 내역’을 씁니다. CSV와 API 모두 제공되며 기준월, 사업장명, 지역, 가입자 수, 당월 고지금액, 신규 취득자 수가 들어 있습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_36.jpg" alt="입력 자료 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>지원 한도 참고값 계산</h4>
+        <p>계산식은 몰라도 됩니다. Plan Mode에서 만들고 싶은 것을 설명하면 우선지원대상기업 240%, 최저 500만 원, 2026년 국민연금 요율 9.5% 같은 조건을 AI가 찾아 정리합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_37.jpg" alt="지원 한도 참고값 계산 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>계산 가정과 실제 한도</h4>
+        <p>고지금액과 가입자 수만으로 실제 훈련 지원 한도를 확정할 수는 없습니다. 상담 전에 고용보험 상시근로자 수, 적용 요율, 지원 대상 여부를 고용24에서 기업별로 확인합니다.</p>
+        <p class="note"><b>주의</b>추정 환급액은 참고값입니다.</p>
+        <figure class="inline-shot"><img src="img/p1_38.jpg" alt="계산 가정과 실제 한도 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>수동 검산</h4>
+        <p>○○정밀(가상, 가입자 128명, 당월 고지액 49,246,875원)로 직접 계산하면 월 보수 추정 547,187,500원, 연간 보험료 추정 16,415,625원, 참고값 39,397,500원이 나옵니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_39.jpg" alt="수동 검산 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">05</div>
+        <h4>영업팀용 확장</h4>
+        <p>지역, 참고값 1,000만 원 이상, 신규 취득 5명 이상 같은 필터와 업종별 과정 추천을 붙여 엑셀로 저장합니다. 후보 정리부터 콜드메일 작성까지 자동화할 수 있습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_40.jpg" alt="영업팀용 확장 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">06</div>
+        <h4>매월 자료 교체</h4>
+        <p>매월 새 CSV로 바꿔 넣어도 되지만, 가능하면 API 키를 연동하는 것이 가장 편한 자동화입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p1_41.jpg" alt="매월 자료 교체 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p1_36.jpg" alt="" class="on"><img src="img/p1_37.jpg" alt=""><img src="img/p1_38.jpg" alt=""><img src="img/p1_39.jpg" alt=""><img src="img/p1_40.jpg" alt=""><img src="img/p1_41.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+
+  <div class="block keep">
+    <h3 class="block-title">1부 핵심 정리</h3>
+    <ol class="points"><li><span>01</span><p>Claude Code 앱만 설치하고, Python·Git·Node.js는 Claude에게 설치해 달라고 합니다.</p></li><li><span>02</span><p>업무 매뉴얼을 Claude에게 주고 규칙(CLAUDE.md)을 만들어 달라고 합니다.</p></li><li><span>03</span><p>공식 스킬과 ‘스킬 찾는 스킬’을 설치한 뒤, 필요한 스킬은 찾아 달라고 합니다.</p></li><li><span>04</span><p>제작 전에 Plan Mode로 충분히 대화해 시간과 토큰을 아낍니다.</p></li><li><span>05</span><p>배포도 “문제점 찾아본 뒤 배포해줘”라고 요청합니다.</p></li></ol>
+  </div>
+</section>
+
+<section id="part2" class="sec">
+  <header class="part-head">
+    <div class="part-no">2부</div>
+    <h2>AI로 만드는 교육영상</h2>
+  </header>
+
+  <div class="block">
+    <h3 class="block-title">AI 교육영상 제작의 흐름</h3>
+    <div class="flow p2">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>목적에 맞는 영상 유형</h4>
+        <p>교육 목표를 먼저 정하고 표현 방식을 고릅니다. 상황 판단에는 재연과 드라마, 따라 하기에는 단계별 시범, 개념 이해에는 설명 그래픽, 기억에 남기기에는 캐릭터와 짧은 이야기가 어울립니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_03.jpg" alt="목적에 맞는 영상 유형 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>제작 7단계</h4>
+        <p>교육 목표, 아이디어·대본, 콘티, 기준 이미지, 영상 생성, 사운드·편집, 검수·수정 순서로 진행합니다. 영상 생성은 이 중 한 단계일 뿐이며, 처음에 누구에게 무엇을 보여 줄지 잘 정해야 재생성이 줄어듭니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_05.jpg" alt="제작 7단계 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>교육 문장을 장면으로</h4>
+        <p>“업무 처리 전 관련 정보를 확인해야 합니다” 같은 문장을 상황, 인물, 핵심 행동으로 나눠 보이는 장면으로 바꿉니다. 시청자가 무엇을 보고 메시지를 이해할지 먼저 생각합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_07.jpg" alt="교육 문장을 장면으로 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>생성 전에 기준 만들기</h4>
+        <p>인물·공간·소품의 기준 이미지가 있어야 여러 컷을 자연스럽게 이을 수 있습니다. 캐릭터 일관성이 가장 어려우므로 인물 시트와 키 비례표까지 준비합니다.</p>
+        <p class="note"><b>참고</b>시간은 이미지 제작 80%, 영상 생성 20%로 나눕니다.</p>
+        <figure class="inline-shot"><img src="img/p2_08.jpg" alt="생성 전에 기준 만들기 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">05</div>
+        <h4>장면별 모델 선택</h4>
+        <p>모든 장면을 같은 모델로 만들 필요는 없습니다. 시댄스는 대사와 표정 표현이 좋지만 비싸고, 클링은 빠르고 저렴하며, 미니맥스 H3는 음성 없는 모션그래픽에 강합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_09.jpg" alt="장면별 모델 선택 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">06</div>
+        <h4>실제 제작비</h4>
+        <p>제작비는 몇 번 만에 쓸 수 있는 결과가 나오는지에 달려 있습니다. 시댄스 2.5 기준 15초 1회 약 16,800원이고, 보통 세 번 정도 뽑으므로 한 컷에 5만 원 안팎으로 봅니다.</p>
+        <p class="note"><b>주의</b>발주 기관의 수정이 잦으므로 영상 생성 예산은 예상의 2~3배로 잡는 것이 안전합니다.</p>
+        <figure class="inline-shot"><img src="img/p2_11.jpg" alt="실제 제작비 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">07</div>
+        <h4>대사는 필요한 장면에만</h4>
+        <p>대사가 들어가면 목소리, 발음, 립싱크까지 관리할 것이 늘어납니다. 인물이 꼭 말해야 하는 장면인지 먼저 판단하고, 나머지는 화면과 자막, 나레이션으로 전달합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_12.jpg" alt="대사는 필요한 장면에만 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">08</div>
+        <h4>사운드는 나눠서 제작</h4>
+        <p>대사, 효과음, 나레이션, BGM을 트랙별로 나눠 만들면 수정 범위가 줄어듭니다. 영상 생성 프롬프트에는 ‘BGM은 빼라’고 따로 적습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_15.jpg" alt="사운드는 나눠서 제작 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">09</div>
+        <h4>구체적으로 요청하기</h4>
+        <p>‘자연스럽게’ 대신 “상대의 말을 듣고 잠시 생각한 뒤 조심스럽게 질문한다”처럼 행동으로 요청합니다. 무엇을 보여 주고, 무엇을 유지하고, 무엇을 바꿀지 먼저 정리합니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_16.jpg" alt="구체적으로 요청하기 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">10</div>
+        <h4>감독은 결국 자신</h4>
+        <p>AI가 결과를 제안하면 기획, 연출, 판단, 검수는 제작자가 맡습니다. 도구가 많아진 만큼 아이디어와 연출, 예산을 나누는 판단이 더 중요해졌습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_17.jpg" alt="감독은 결국 자신 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p2_03.jpg" alt="" class="on"><img src="img/p2_05.jpg" alt=""><img src="img/p2_07.jpg" alt=""><img src="img/p2_08.jpg" alt=""><img src="img/p2_09.jpg" alt=""><img src="img/p2_11.jpg" alt=""><img src="img/p2_12.jpg" alt=""><img src="img/p2_15.jpg" alt=""><img src="img/p2_16.jpg" alt=""><img src="img/p2_17.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+  <div class="block">
+    <h3 class="block-title">현장 실습 시연</h3>
+    <div class="flow p2">
+      <ol class="steps">
+      <li class="step">
+        <div class="num">01</div>
+        <h4>주제 정하기</h4>
+        <p>참석자와 함께 네 가지 질문으로 주제를 정했습니다. 대상은 20대 구직자, 목표는 실업급여 신청 조건 확인, 상황은 퇴사 후 구직급여를 알게 되는 순간, 핵심 행동은 고용24에서 조건을 확인하는 것입니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_19.jpg" alt="주제 정하기 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">02</div>
+        <h4>생성 요청으로 구체화</h4>
+        <p>ChatGPT로 주인공 캐릭터 시트를 만들고, 15초 4컷 콘티를 짠 뒤, 캐릭터 시트를 참조하는 영상 생성 프롬프트를 작성했습니다.</p>
+        <p class="note"><b>참고</b>BGM은 빼고 효과음만 쓰며, 대사 대신 속마음과 나레이션으로 처리해 립싱크 문제를 피했습니다.</p>
+        <figure class="inline-shot"><img src="img/p2_20.jpg" alt="생성 요청으로 구체화 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">03</div>
+        <h4>힉스필드에서 생성</h4>
+        <p>힉스필드에 캐릭터 시트를 인물 요소로 등록하고, 시댄스 2.5, 16:9, 1080p, 15초로 설정해 생성했습니다. 1회 생성에 240크레딧이 들었습니다.</p>
+        
+        <figure class="inline-shot"><img src="img/p2_10.jpg" alt="힉스필드에서 생성 교안"></figure>
+      </li>
+      <li class="step">
+        <div class="num">04</div>
+        <h4>결과 확인</h4>
+        <p>‘구직급여’가 ‘구직급이’로 발음되는 오류가 나왔습니다. 이런 경우 다시 생성해도 같은 경우가 많아 나레이션으로 처리하는 것이 빠릅니다.</p>
+        <p class="note"><b>참고</b>카메라 움직임을 줄이고 표정 클로즈업은 2K 이상으로 요청하면 오류가 줄어듭니다.</p>
+        <figure class="inline-shot"><img src="img/p2_21.jpg" alt="결과 확인 교안"></figure>
+      </li>
+      </ol>
+      <div class="stage"><div class="frame"><img src="img/p2_19.jpg" alt="" class="on"><img src="img/p2_20.jpg" alt=""><img src="img/p2_10.jpg" alt=""><img src="img/p2_21.jpg" alt=""></div><span class="zoom-hint">이미지를 누르면 크게 볼 수 있어요</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="block-title">질의응답</h3>
+    <div class="qna"><div class="qa"><p class="q">캐릭터 목소리가 컷마다 달라지는데 어떻게 하나요?</p><p class="a">목소리 등록 기능이 있지만 한국어는 아직 어색합니다. 처음부터 대사 분량을 적게 기획하는 것이 가장 유리합니다.</p></div><div class="qa"><p class="q">대표님이 ‘쉽고 돈 안 든다’고 생각하면 어떻게 설득하나요?</p><p class="a">1분짜리라도 이어지는 영상을 함께 만들어 보면 캐릭터가 바뀌는 문제를 바로 느낍니다. 말보다 옆에서 같이 만들어 보는 것이 효과적입니다.</p></div><div class="qa"><p class="q">역사물처럼 고증이 필요할 때는 어떻게 하나요?</p><p class="a">기준 시트를 세심하게 만들고, 컷을 나누거나 문제가 되는 부분을 화면 구도에서 빼는 방식으로 대응합니다.</p></div><div class="qa"><p class="q">영상 전에 이미지 단계에서 연출을 세세하게 잡나요?</p><p class="a">그렇습니다. 이미지에서 부족한 점은 영상에서 더 커지므로 이미지에 80%의 시간을 씁니다.</p></div></div>
+  </div>
+
+  <div class="block keep">
+    <h3 class="block-title">2부 핵심 정리</h3>
+    <ol class="points"><li><span>01</span><p>교육 목표를 먼저 정하고, 목표에 맞는 표현 방식을 고릅니다.</p></li><li><span>02</span><p>교육 문장을 인물의 행동과 상황, 즉 보이는 장면으로 바꿉니다.</p></li><li><span>03</span><p>인물·공간·소품의 기준 이미지를 먼저 만들어 컷 사이의 일관성을 지킵니다.</p></li><li><span>04</span><p>장면별로 모델을 달리 쓰고, 짧은 테스트로 재생성 횟수와 비용을 줄입니다.</p></li><li><span>05</span><p>대사는 꼭 필요한 장면에만 쓰고, 사운드는 트랙별로 나눠 만듭니다.</p></li></ol>
+  </div>
+</section>
+<footer class="foot">2026. 11. 18.</footer>
+</div>
+</main>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+
+  // 화면 + 내용: 읽고 있는 단계의 교안 화면으로 바꾸기
+  document.querySelectorAll('.flow').forEach(function(flow){
+    var steps=[].slice.call(flow.querySelectorAll('.step'));
+    var shots=[].slice.call(flow.querySelectorAll('.stage img'));
+    function set(i){
+      steps.forEach(function(s,k){s.classList.toggle('on',k===i)});
+      shots.forEach(function(s,k){s.classList.toggle('on',k===i)});
+    }
+    set(0);
+    steps.forEach(function(s,i){ s.addEventListener('click',function(){ set(i); }); });
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting) set(steps.indexOf(e.target)); });
+      },{rootMargin:'-40% 0px -55% 0px'});
+      steps.forEach(function(s){ io.observe(s); });
+    }
+  });
+
+  // 교안 이미지 크게 보기
+  var box=null;
+  function closeBox(){ if(box){ box.remove(); box=null; } }
+  function openBox(src){
+    closeBox();
+    box=document.createElement('div'); box.className='lightbox';
+    var im=document.createElement('img'); im.src=src; im.alt='교안 크게 보기';
+    box.appendChild(im); box.addEventListener('click',closeBox);
+    document.body.appendChild(box);
+  }
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeBox(); });
+  document.querySelectorAll('.stage img, .inline-shot img').forEach(function(im){
+    im.addEventListener('click',function(e){ e.stopPropagation(); openBox(im.src); });
+  });
+
+  // 왼쪽 날개: 현재 보고 있는 섹션 표시
+  var links=[].slice.call(document.querySelectorAll('.dots a'));
+  var secs=links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function onScroll(){
+    var y=window.scrollY+window.innerHeight*0.3, cur=0;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
+    if(window.innerHeight+window.scrollY>=document.body.scrollHeight-4) cur=secs.length-1;
+    links.forEach(function(a,i){ a.classList.toggle('on',i===cur); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+
+</script>
+</body>
+</html>
